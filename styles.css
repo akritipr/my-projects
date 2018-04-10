@@ -1,0 +1,142 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background-color: 000;
+	font-family: 'Monoton', cursive;
+}
+
+.board-table{
+	margin: auto;
+    position: relative;
+    top: 50px;
+    border-collapse: collapse;
+    font-family: 'Caveat Brush', cursive;
+    color : #e6082f;
+    text-align: center;
+    font-size: 70px;
+}
+
+.header{
+	text-align: center;
+	font-size: 40px;
+	color: #ffc107;
+}
+
+.board-table td{
+	border: 6px solid #217ebf;
+	width: 100px; 
+	height: 100px;
+}
+
+.board-table tr:nth-child(1) td{
+	border-top: none;
+}
+
+.board-table tr:nth-child(3) td{
+	border-bottom: none;
+}
+
+.board-table tr td:nth-child(1){
+	border-left: none;
+}
+
+.board-table tr td:nth-child(3){
+	border-right: none;
+}
+
+.board-table tr td:nth-child(4){
+	border-right: none;
+}
+
+.board-table tr:nth-child(4) td{
+	border-bottom: none;
+}
+
+
+.button-section{
+	position: relative;
+    top: 100px;
+    text-align: center;
+}
+
+.clear-button{
+	background-color: #00BCD4;
+    cursor: pointer;
+    border: 4px solid #00BCD4;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: inherit;
+    color: #fff;
+}
+
+.display-results{
+	position: absolute;
+    right: 50px;
+    top: 175px;
+}
+
+.display-results table{
+	color: #f44336;
+    font-size: 22px;
+    font-family: monospace;
+    font-weight: bolder;
+}
+
+.start-button{
+	background-color: #8BC34A;
+    border: 4px solid #8BC34A;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: inherit;
+    color: #fff;
+}
+
+#show-result , .center-align{
+	color: white;
+	text-align: center;
+
+}
+
+#win-result, #lose-result{
+	font-size: 40px;
+    background-color: red;
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    /*top: 110px;*/
+    left: 43%;
+    animation-name: drop;
+    animation-duration: 3s;
+}
+
+@keyframes drop{
+	from{
+		top:0;
+	}
+	to{
+		top: 110px;
+	}
+}
+
+@-webkit-keyframes drop{
+	from{
+		top:0;
+	}
+	to{
+		top: 110px;
+	}
+}
+
+.level-button{
+	background-color: #009688;
+    border: #001e80;
+    padding: 5px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-top: 20px;
+}

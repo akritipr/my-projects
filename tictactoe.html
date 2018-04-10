@@ -1,0 +1,126 @@
+<!Doctype>
+<html>
+	<head>
+		<title>Tic</title>
+		  <link rel="stylesheet" href="styles.css">
+		  <link href='https://fonts.googleapis.com/css?family=Monoton:400' rel='stylesheet' type='text/css'>
+		  <link href='https://fonts.googleapis.com/css?family=Caveat+Brush:400' rel='stylesheet' type='text/css'>
+		
+	</head>
+	<body>
+		<div class="header">TIC TAC TOE</div>
+
+		<div class="center-align">
+			<select class="level-button" onchange="selectLevel()" id="select-level">
+				<option value="">Select Level</option>
+				<option value="0">Easy</option>
+				<option value="1">Hard</option>
+				<option value="2">Difficult</option>
+			</select>
+
+		</div>
+		<div id="table-easy">
+			<div id="game-body">
+				<div>
+					<table class="board-table" id="table-one">
+						<tr>
+							<td id="0" onclick="cellClicked(id)"></td>
+							<td id="1" onclick="cellClicked(id)"></td>
+							<td id="2" onclick="cellClicked(id)"></td>
+						</tr>
+						<tr>
+							<td id="3" onclick="cellClicked(id)"></td>
+							<td id="4" onclick="cellClicked(id)"></td>
+							<td id="5" onclick="cellClicked(id)"></td> 
+						</tr>
+						<tr>
+							<td id="6" onclick="cellClicked(id)"></td>
+							<td id="7" onclick="cellClicked(id)"></td>
+							<td id="8" onclick="cellClicked(id)"></td>
+						</tr>
+
+					</table>
+				</div>
+				<div class="button-section" id="buttons">
+					<button class="clear-button" onclick="clearBoard()">CLEAR</button>
+					<button class="start-button" onclick="startAgain()">Start New</button>
+				</div>
+
+				<div class="display-results">
+					<table>
+						<tr>
+							<td>Computer</td>
+							<td>Human</td>
+						</tr>
+						<tr>
+							<td id="comp-score"></td>
+							<td id="human-score"></td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+		<div id="table-hard">
+			<div id="game-body-hard">
+				<div>
+					<table class="board-table" id="table-two">
+						<tr>
+							<td id="10" onclick="cellClicked(id)"></td>
+							<td id="11" onclick="cellClicked(id)"></td>
+							<td id="12" onclick="cellClicked(id)"></td>
+							<td id="13" onclick="cellClicked(id)"></td>
+						</tr>
+						<tr>
+							<td id="14" onclick="cellClicked(id)"></td>
+							<td id="15" onclick="cellClicked(id)"></td>
+							<td id="16" onclick="cellClicked(id)"></td>
+							<td id="17" onclick="cellClicked(id)"></td> 
+						</tr>
+						<tr>
+							<td id="18" onclick="cellClicked(id)"></td>
+							<td id="19" onclick="cellClicked(id)"></td>
+							<td id="110" onclick="cellClicked(id)"></td>
+							<td id="111" onclick="cellClicked(id)"></td>
+						</tr>
+						<tr>
+							<td id="112" onclick="cellClicked(id)"></td>
+							<td id="113" onclick="cellClicked(id)"></td>
+							<td id="114" onclick="cellClicked(id)"></td>
+							<td id="115" onclick="cellClicked(id)"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="button-section" id="buttons">
+					<button class="clear-button" onclick="clearBoard()">CLEAR</button>
+					<button class="start-button" onclick="startAgain()">Start New</button>
+				</div>
+
+				<div class="display-results">
+					<table>
+						<tr>
+							<td>Computer</td>
+							<td>Human</td>
+						</tr>
+						<tr>
+							<td id="comp-score-hard"></td>
+							<td id="human-score-hard"></td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="show-result">
+			<div id="win-result">
+				You Won!!
+			</div>
+			<div id="lose-result">
+				You Lose.
+			</div>
+		</div>
+
+		<script type="text/javascript" src="script.js"></script>
+	</body>
+</html>
