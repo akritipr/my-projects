@@ -1,0 +1,1 @@
+["[\n  {\n    \"CASE_STATUS\": \"CERTIFIED\",\n    \"COUNT(*)\": 545694\n  },\n  {\n    \"CASE_STATUS\": \"CERTIFIED-WITHDRAWN\",\n    \"COUNT(*)\": 49704\n  },\n  {\n    \"CASE_STATUS\": \"WITHDRAWN\",\n    \"COUNT(*)\": 20772\n  },\n  {\n    \"CASE_STATUS\": \"DENIED\",\n    \"COUNT(*)\": 8480\n  }\n]"]

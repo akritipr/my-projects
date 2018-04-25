@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>H-1 B</title>
+
+
+        <style>
+            body {
+                background-color: #078693;
+            }
+            .table-column{
+                padding: 20px;
+                border-right: 2px solid black;
+            }
+            .table{
+                text-align: center;
+            }
+
+            .chart {
+            background-color: #808080b8;
+            }
+
+            .chart rect {
+            fill: #dfc900;
+            background-color: #808080b8;
+            }
+
+            .chart text {
+            fill: black;
+            font: 10px sans-serif;
+            /* text-anchor: end; */
+            font-weight: bold;
+            }
+
+            #stateBarChart{
+                display: block;
+                text-align: center;
+            }
+
+            path{
+                fill: rgba(63, 197, 35, 0.75)!important;
+            }
+
+            path:active, path:hover  {
+                fill: rgb(253, 153, 40)!important;
+            }
+
+            .label{
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+        </style>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+        <script src="./datamaps/datamaps.usa.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script> 
+    </head>
+    <body>
+        <div id="map_election" style="margin: auto; position: relative; width: 1000px; height: 480px;margin-bottom: 80px;"></div>
+
+        <div id="stateMapDisplay"></div>
+
+        <div id="stateBarChart">
+                <div class="label">Below chart shows the top 10 Salaries in descending order related to the Job Title and Employer Name</div>
+        <svg id="svgElement" class="chart" width="1000" height="500">
+                <g transform="translate(0,0)">
+                      </g>              
+        </svg>
+            </div>
+        <script>
+
+            let stateAbbrMap = '';
+            $.get( "stateAbbrMap.json", function( stateMap) {
+                stateAbbrMap = stateMap;
+            });
+
+            let stateData = [];
+
+             $.get( "states.json", function( mapData ) {
+                mapData = JSON.parse(mapData);
+                    let fills = ['#CC4731','#306596', '#667FAF','#A9C0DE', '#CA5E5B', '#EAA9A8'];
+                     mapData.map((a)=>{
+                        let temp = Math.floor(Math.random() * 5 + 1);
+                        
+                            a['WORKSITE_STATE'] = {
+                                "fillKey" : fills[temp],
+                                "noOfJobs": a['NO_OF_JOBS']
+                            }
+                                      
+                            
+                        
+                        stateData.push(a['WORKSITE_STATE']) ;
+                    });
+
+                    console.log("mapData=="+mapData); 
+                    console.log("stateData=="+stateData);   
+                    
+                    var election = new Datamap({
+                        scope: 'usa',
+                        element: document.getElementById('map_election'),   
+                        geographyConfig: {
+                                highlightBorderColor: '#bada55',
+                            popupTemplate: function(geography, data) {
+                                return '<div class="hoverinfo">' + geography.properties.name ; console.log(geography);
+                                },
+                                highlightBorderWidth: 3
+                            },
+
+                     
+                        data:{mapData}
+                        });
+                        election.labels();
+                        let datamaps = document.getElementsByClassName("datamaps-subunits");
+                        let childNodes = datamaps[0].childNodes;
+                        for(let i = 0 ; i< childNodes.length; i ++){  
+                            childNodes[i].addEventListener("mouseover", function(){
+                                setTimeout(function(){
+                                    let hoveredSateName = document.getElementsByClassName("hoverinfo")[0].innerText;
+                                    let hoveredSateId =  stateAbbrMap.filter((value, index, arr) => arr[index].name == hoveredSateName);
+                                    let json = "./state_json/"+hoveredSateId[0].abbreviation + ".json";
+                                    document.getElementById("stateBarChart").style.display = 'none';
+                                    $.get( json, function( stateData ) {
+                                        console.log("JSON data = " + stateData);
+                                        
+
+                                        document.getElementById("stateBarChart").style.display = 'block';
+                                        let stateBarChartElement = document.getElementById("stateBarChart");
+                                        
+                                        let x = 0;
+                                        let y = 0;
+                                        d3.select("#stateBarChart").select("svg").remove();
+
+
+                                        let svgElement = document.createElementNS("http://www.w3.org/2000/svg","svg"); 
+                                        svgElement.setAttribute("class","chart");
+                                        svgElement.setAttribute("width","1000");
+                                        svgElement.setAttribute("height","400");
+                                        for(let i = 0; i < stateData.length; i++){
+                                            let gElement = document.createElementNS("http://www.w3.org/2000/svg","g"); 
+                                            gElement.setAttribute("transform","translate(" + x + "," + y + ")");
+                                            //gElement.style.transform = "translate(" + x + "," + y + ")";
+                                            let rectElement = document.createElementNS("http://www.w3.org/2000/svg","rect"); 
+                                            rectElement.setAttribute("height",30);
+                                            rectElement.setAttribute("width",Math.floor((stateData[i].AVERAGE_WAGE_RATE_OF_PAY)/1000));
+                                            let textElementPay = document.createElementNS("http://www.w3.org/2000/svg","text"); 
+                                            textElementPay.setAttribute("x","50");
+                                            textElementPay.setAttribute("y","2.5");
+                                            textElementPay.setAttribute("dy","15px");
+                                            textElementPay.innerHTML = stateData[i].AVERAGE_WAGE_RATE_OF_PAY;
+
+                                            let textElementEmployerName = document.createElementNS("http://www.w3.org/2000/svg","text"); 
+                                            textElementEmployerName.setAttribute("x","150");
+                                            textElementEmployerName.setAttribute("y","2.5");
+                                            textElementEmployerName.setAttribute("dy","15px");
+                                            textElementEmployerName.innerHTML = stateData[i].EMPLOYER_NAME;
+                                            
+
+                                            let textElementJobTitle = document.createElementNS("http://www.w3.org/2000/svg","text"); 
+                                            textElementJobTitle.setAttribute("x","500");
+                                            textElementJobTitle.setAttribute("y","2.5");
+                                            textElementJobTitle.setAttribute("dy","15px");
+                                            textElementJobTitle.innerHTML = stateData[i].JOB_TITLE;
+
+                                            
+                                            gElement.appendChild(rectElement);
+                                            gElement.appendChild(textElementPay);
+                                            gElement.appendChild(textElementEmployerName);
+                                            gElement.appendChild(textElementJobTitle);
+                                            svgElement.appendChild(gElement);
+                                            y = y + 32;
+                                        }
+                                        stateBarChartElement.appendChild(svgElement);
+                                    });
+                                },0);
+                            });
+                        }
+                 });                    
+            </script>
+    </body>
+</html>
